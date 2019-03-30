@@ -1,7 +1,5 @@
 import RPi.GPIO as GPIO
 import dht11
-import time
-import datetime
 
 # initialize GPIO
 GPIO.setwarnings(False)
@@ -19,12 +17,14 @@ def get_temperature():
             break
     return result.temperature
 
+
 def get_humidity():
-     while True:
+    while True:
         result = dht11_instance.read()
         if result.is_valid():
             break
-     return result.humidity
+    return result.humidity
+
 
 def get_temperature_and_humidity():
     while True:

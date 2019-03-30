@@ -1,0 +1,22 @@
+{
+  "temperatury": {
+    "summer": {
+      "max": 26, 
+      "min": 18
+    }, 
+    "winter": {
+      "max": 23, 
+      "min": 18
+    }
+  }, 
+  "humidity": {
+    "summer": {
+      "max": 60, 
+      "min": 40
+    }, 
+    "winter": {
+      "max": 60, 
+      "min": 40
+    }
+  }
+}
