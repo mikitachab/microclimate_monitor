@@ -28,4 +28,4 @@ while True:
     logger.info(f'T:{temperature} C  H:{humidity}% VALID:{is_valid}')
     if not is_valid:
         send_email(test_receiver_email, message)
-    time.sleep(5)
+    time.sleep(60)
