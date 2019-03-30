@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-import dht11
+import temp_humid.dht11 as dht11
 
 # initialize GPIO
 GPIO.setwarnings(False)
