@@ -20,13 +20,15 @@ Rasberry Pi started monitoring.
 
 
 def send_email(receiver, message):
-    context = ssl.create_default_context()
+    try:
+        context = ssl.create_default_context()
 
-    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-        server.login(pi_sender_email, password)
-        server.sendmail(pi_sender_email, receiver, message)
-        logger.info(f'sended email to {receiver}')
-
+        with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+            server.login(pi_sender_email, password)
+            server.sendmail(pi_sender_email, receiver, message)
+            logger.info(f'sended email to {receiver}')
+    except Exception:
+        logger.error('connection troubles')
 
 if __name__ == '__main__':
     send_email(receiver=test_receiver_email, message=test_message)
