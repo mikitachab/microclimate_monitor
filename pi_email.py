@@ -1,5 +1,6 @@
 import smtplib
 import ssl
+from logger import logger
 
 port = 465  # for SSL
 smtp_server = 'smtp.gmail.com'
@@ -24,6 +25,7 @@ def send_email(receiver, message):
     with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
         server.login(pi_sender_email, password)
         server.sendmail(pi_sender_email, receiver, message)
+        logger.info(f'sended email to {receiver}')
 
 
 if __name__ == '__main__':
