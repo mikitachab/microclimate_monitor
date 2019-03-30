@@ -106,3 +106,4 @@ venv.bak/
 
 .secret
 pimicroclimate.log
+data.db
