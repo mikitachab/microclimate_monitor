@@ -24,7 +24,7 @@ def get_humidity():
         result = dht11_instance.read()
         if result.is_valid():
             break
-    return result.humidity
+     return result.humidity
 
 def get_temperature_and_humidity():
     while True:
