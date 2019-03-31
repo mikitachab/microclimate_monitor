@@ -21,11 +21,12 @@ while True:
         'temperature': temperature,
         'humidity': humidity,
         'is_valid': is_valid,
-        'datatime': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        'datetime': datetime.now().replace(microsecond=0)
     }
     conn = engine.connect()
     ins = measurements.insert().values(**measurement)
-    logger.info(f'T:{temperature} C  H:{humidity}% VALID:{is_valid}')
+    conn.execute(ins)
+    logger.info(f'T:{temperature} C H:{humidity}% VALID:{is_valid}')
     if not is_valid:
         send_email(test_receiver_email, message)
     time.sleep(60)
