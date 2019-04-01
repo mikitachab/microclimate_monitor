@@ -5,4 +5,6 @@
     - pip install -r requirements.txt
   script:
     - python3 -m pytest test/
+    - pycodestyle --max-line-length=120 .
+
 
