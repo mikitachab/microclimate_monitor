@@ -1,4 +1,4 @@
-from ... import microclimate_validator
+from microclimate_validator import validate_climate
 
 
 def test_validator_return_true():
