@@ -3,7 +3,7 @@ from datetime import datetime
 from temp_humid import get_temperature_and_humidity
 from microclimate_validator import validate_climate
 from db import engine, measurements
-from logger import logger
+from logger import logger, initialize_logger
 from pi_email import send_email, test_receiver_email
 
 message = test_message = """\
@@ -13,6 +13,8 @@ Hi, something wrong with your microclimate. It's time to something
 This message is sent from Python.
 Rasberry Pi started monitoring.
 """
+
+initialize_logger('pimicroclimate.log')
 
 while True:
     temperature, humidity = get_temperature_and_humidity()
