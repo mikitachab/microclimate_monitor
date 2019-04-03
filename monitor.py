@@ -6,7 +6,7 @@ from db import engine, measurements
 from logger import logger, initialize_logger
 from pi_email import send_email, test_receiver_email
 
-message  = """\
+message = """\
 Subject: microclimate
 
 Hi, something wrong with your microclimate. It's time to something

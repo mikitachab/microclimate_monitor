@@ -4,8 +4,11 @@
   install:
     - pip install -r requirements.txt
   script:
-    - python3 -m pytest test/
-    - pip install pycodestyle
+    - pip install pycodestyle pyflakes vulture
+    - pyflakes .
     - pycodestyle --max-line-length=120 .
+    - vulture --min-confidence=100 .
+    - python3 -m pytest test/
+
 
 
