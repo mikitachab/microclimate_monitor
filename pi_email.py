@@ -1,3 +1,4 @@
+import os
 import smtplib
 import ssl
 from logger import logger
@@ -7,9 +8,7 @@ smtp_server = 'smtp.gmail.com'
 pi_sender_email = 'microclimatepi@gmail.com'  # raspberry pi email address
 test_receiver_email = 'zpiseminar@gmail.com'  # receiver address
 
-with open('.secret') as f:
-    password = f.read()
-
+password = os.environ.get('GMAIL_PASS')
 
 test_message = """\
 Subject: Hi there
