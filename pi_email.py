@@ -29,5 +29,6 @@ def send_email(receiver, message):
     except Exception:
         logger.error('connection troubles')
 
+
 if __name__ == '__main__':
     send_email(receiver=test_receiver_email, message=test_message)
