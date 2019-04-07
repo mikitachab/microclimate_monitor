@@ -18,10 +18,10 @@ Rasberry Pi started monitoring.
 initialize_logger('pimicroclimate.log')
 
 temperatures = []
-humidity_list= []
+humidity_list = []
 
 while True:
- 
+
     temperature, humidity = get_temperature_and_humidity()
 
     temperatures.append(temperature)
@@ -38,7 +38,7 @@ while True:
     ins = measurements.insert().values(**measurement)
     conn.execute(ins)
     logger.info(f'T:{temperature} C H:{humidity}% VALID:{is_valid}')
-    
+
     if len(temperatures) == 5:
         avg_temp = mean(temperatures)
         avg_hum = mean(humidity_list)
