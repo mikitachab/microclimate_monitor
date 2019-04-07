@@ -2,11 +2,11 @@
   "temperature": {
     "summer": {
       "max": 26,
-      "min": 18
+      "min": 19
     },
     "winter": {
       "max": 23,
-      "min": 18
+      "min": 19
     }
   },
   "humidity": {
