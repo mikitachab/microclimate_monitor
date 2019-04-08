@@ -24,8 +24,8 @@ class MailSender():
             context = ssl.create_default_context()
             with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
                 server.login(self._sender.mail, self._sender.password)
-                server.sendmail(self._sender.mail, self._receiver, self._construct_message(invalid_measurements))
-                logger.info(f'sended email to {self._receiver}')
+                server.sendmail(self._sender.mail, self._receiver_mail, self._construct_message(invalid_measurements))
+                logger.info(f'sended email to {self._receiver_mail}')
         except Exception:
             logger.error('connection troubles')
 
@@ -38,8 +38,8 @@ class MailSender():
         return message[:-1]
 
     def _alert_wrong_measurement(self, value, measurement):
-        alert = f'Wrong {value}. It is ' + str(measurement[0]) + '\nConsider '
-        if measurement[1] == InvalidationType.LOW:
+        alert = f'Wrong {value}. It is {measurement[0]} and should be {measurement[1]}.\nConsider '
+        if measurement[2] == InvalidationType.LOW:
             alert += f'increasing the {value}.\n'
         else:
             alert += f'decreasing the {value}.\n'

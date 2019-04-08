@@ -31,7 +31,7 @@ while True:
     temperatures.append(temperature)
     humidity_list.append(humidity)
 
-    is_valid = bool(validate_climate(temperature, humidity))
+    is_valid = not bool(validate_climate(temperature, humidity))
     measurement = {
         'temperature': temperature,
         'humidity': humidity,
