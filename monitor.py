@@ -4,7 +4,7 @@ from temp_humid import get_temperature_and_humidity
 from microclimate_validator import validate_climate
 from db import engine, measurements
 from logger import logger, initialize_logger
-from pi_email import send_email, test_receiver_email
+from mail_sender import MailSender, sender, receiver_email
 from statistics import mean
 
 message = """\
@@ -15,10 +15,14 @@ This message is sent from Python.
 Rasberry Pi started monitoring.
 """
 
+MONITORED_VALUES = ('temperature', 'humidity')
+mail_sender = MailSender(sender, receiver_email, MONITORED_VALUES)
+
 initialize_logger('pimicroclimate.log')
 
 temperatures = []
 humidity_list = []
+
 
 while True:
 
@@ -27,7 +31,7 @@ while True:
     temperatures.append(temperature)
     humidity_list.append(humidity)
 
-    is_valid = validate_climate(temperature, humidity)
+    is_valid = not bool(validate_climate(temperature, humidity))
     measurement = {
         'temperature': temperature,
         'humidity': humidity,
@@ -42,10 +46,10 @@ while True:
     if len(temperatures) == 5:
         avg_temp = mean(temperatures)
         avg_hum = mean(humidity_list)
-        is_valid = validate_climate(avg_temp, avg_hum)
+        invalid_measurements = validate_climate(avg_temp, avg_hum)
 
-        if not is_valid:
-            send_email(test_receiver_email, message)
+        if invalid_measurements:
+            mail_sender.send_email(invalid_measurements)
 
         temperatures.clear()
         humidity_list.clear()
