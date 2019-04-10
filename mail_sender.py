@@ -1,4 +1,3 @@
-import os
 import smtplib
 import ssl
 from microclimate_validator import InvalidationType

@@ -1,8 +1,7 @@
-import time
 from statistics import mean
 from sensors import get_measurement
 from microclimate_validator import validate_climate
-from db import engine, measurements_insert
+from db import measurements_insert
 from logger import logger, initialize_logger
 from mail_sender import MailSender, sender, receiver_email
 from timing import MonitorTimer
