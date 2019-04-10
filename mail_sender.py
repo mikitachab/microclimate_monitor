@@ -2,13 +2,14 @@ import os
 import smtplib
 import ssl
 from microclimate_validator import InvalidationType
+from config import Config
 from logger import logger
 
 port = 465  # for SSL
 smtp_server = 'smtp.gmail.com'
 sender = {
-    'mail': 'microclimatepi@gmail.com',
-    'password': os.environ.get('GMAIL_PASS')
+    'mail': Config.gmail_user,
+    'password': Config.gmail_pass,
 }
 receiver_email = 'zpiseminar@gmail.com'  # receiver address
 

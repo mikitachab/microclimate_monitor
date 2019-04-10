@@ -13,3 +13,9 @@ measurements = Table(
 )
 
 meta.create_all(engine)
+
+
+def measurements_insert(**kwargs):
+    conn = engine.connect()
+    ins = measurements.insert().values(**kwargs)
+    conn.execute(ins)
