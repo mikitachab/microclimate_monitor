@@ -1,5 +1,5 @@
 from datetime import datetime
-from temp_humid import get_temperature_and_humidity
+from sensors.temp_humid import get_temperature_and_humidity
 
 
 def get_measurement():
