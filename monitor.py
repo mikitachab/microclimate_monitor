@@ -14,7 +14,6 @@ def main():
     mail_sender = MailSender(sender, receiver_email, MONITORED_VALUES)
     monitor_timer = MonitorTimer()
     counter = 1
-    
     for _ in monitor_timer.run_forever():
         measurement = get_measurement()
         temperature, humidity = measurement['temperature'], measurement['humidity']
