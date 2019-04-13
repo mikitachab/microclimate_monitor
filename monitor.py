@@ -13,9 +13,8 @@ def main():
     MONITORED_VALUES = ('temperature', 'humidity')
     mail_sender = MailSender(sender, Config.receiver_email, MONITORED_VALUES)
     monitor_timer = MonitorTimer()
-
+    counter = 1
     for _ in monitor_timer.run_forever():
-        counter = 0
         measurement = get_measurement()
         temperature, humidity = measurement['temperature'], measurement['humidity']
         is_valid = not bool(validate_climate(temperature, humidity))
@@ -25,7 +24,9 @@ def main():
         logger.info(f'T:{temperature} C H:{humidity}% VALID:{is_valid}')
 
         if counter >= Config.min_measurements_count:
+            counter = 1
             avg_temp, avg_hum = mean_of_last_n_measurements(Config.min_measurements_count)
+            logger.info(f'AVG_TEMP: {avg_temp}, AVG_HUM {avg_hum}')
             invalid_measurements = validate_climate(avg_temp, avg_hum)
 
             if invalid_measurements:
