@@ -22,8 +22,8 @@ class MailSender():
         try:
             context = ssl.create_default_context()
             with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-                server.login(self._sender.mail, self._sender.password)
-                server.sendmail(self._sender.mail, self._receiver_mail, self._construct_message(invalid_measurements))
+                server.login(self._sender['mail'], self._sender['password'])
+                server.sendmail(self._sender['mail'], self._receiver_mail, self._construct_message(invalid_measurements))
                 logger.info(f'sended email to {self._receiver_mail}')
         except Exception:
             logger.exception('connection troubles')
