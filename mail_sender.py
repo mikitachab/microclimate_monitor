@@ -12,7 +12,6 @@ sender = {
 }
 
 
-
 class MailSender():
     def __init__(self, sender, receiver_mail, measured_values):
         self._sender = sender
@@ -27,7 +26,7 @@ class MailSender():
                 server.sendmail(self._sender.mail, self._receiver_mail, self._construct_message(invalid_measurements))
                 logger.info(f'sended email to {self._receiver_mail}')
         except Exception:
-            logger.error('connection troubles')
+            logger.exception('connection troubles')
 
     def _construct_message(self, invalid_measurements):
         message = ''
