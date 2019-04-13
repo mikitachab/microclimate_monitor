@@ -10,7 +10,7 @@ sender = {
     'mail': Config.gmail_user,
     'password': Config.gmail_pass,
 }
-receiver_email = 'zpiseminar@gmail.com'  # receiver address
+
 
 
 class MailSender():

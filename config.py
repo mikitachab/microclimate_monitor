@@ -6,3 +6,5 @@ class Config:
     gmail_user = 'microclimatepi@gmail.com'
     gmail_pass = os.environ.get('GMAIL_PASS')
     min_measurements_count = 5
+    receiver_email = 'zpiseminar@gmail.com'
+    MONITORED_VALUES = ('temperature', 'humidity')

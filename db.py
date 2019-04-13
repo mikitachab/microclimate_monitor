@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, DateTime, Boolean
 from sqlalchemy.sql import select
 from statistics import mean
+from config import Config
 meta = MetaData()
 engine = create_engine('sqlite:///data.db')
 
@@ -25,13 +26,17 @@ def measurements_insert(**kwargs):
 
 def last_n_measurements(n):
     conn = engine.connect()
-    query = select([measurements.c.temperature, measurements.c.humidity]).order_by(measurements.c.id.desc()).limit(n)
+    select_list = [getattr(measurements.c, value) for value in Config.MONITORED_VALUES]
+    query = select(select_list).order_by(measurements.c.id.desc()).limit(n)
     result = conn.execute(query)
     return result.fetchall()
 
 
 def mean_of_last_n_measurements(n):
     n_measurements = last_n_measurements(n)
-    n_temperature = [x[0] for x in n_measurements]
-    n_humidity = [x[1] for x in n_measurements]
-    return mean(n_temperature), mean(n_humidity)
+    if not n_measurements:
+        return 0
+    avg_list = []
+    for i in range(len(n_measurements[0])):
+        avg_list.append(mean(m[i] for m in n_measurements))
+    return avg_list

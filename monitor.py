@@ -2,7 +2,7 @@ from sensors import get_measurement
 from microclimate_validator import validate_climate
 from db import measurements_insert, mean_of_last_n_measurements
 from logger import logger, initialize_logger
-from mail_sender import MailSender, sender, receiver_email
+from mail_sender import MailSender, sender,
 from timing import MonitorTimer
 from config import Config
 
@@ -11,7 +11,7 @@ def main():
     initialize_logger('pimicroclimate.log')
 
     MONITORED_VALUES = ('temperature', 'humidity')
-    mail_sender = MailSender(sender, receiver_email, MONITORED_VALUES)
+    mail_sender = MailSender(sender, Config.receiver_email, MONITORED_VALUES)
     monitor_timer = MonitorTimer()
 
     for _ in monitor_timer.run_forever():
