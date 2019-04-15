@@ -1,10 +1,10 @@
 import time
-from config import Config
+from config import config
 
 
 class MonitorTimer:
     def __init__(self):
-        self.sleep_time = Config.default_sleep_time
+        self.sleep_time = config['default_sleep_time']
 
     def run_forever(self):
         while True:
@@ -12,4 +12,4 @@ class MonitorTimer:
             time.sleep(self.sleep_time)
 
     def reset_timer(self):
-        self.sleep_time = Config.default_sleep_time
+        self.sleep_time = config['default_sleep_time']

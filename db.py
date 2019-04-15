@@ -1,7 +1,7 @@
 from statistics import mean
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, DateTime, Boolean
 from sqlalchemy.sql import select
-from config import Config
+from config import config
 meta = MetaData()
 engine = create_engine('sqlite:///data.db')
 
@@ -26,7 +26,7 @@ def measurements_insert(**kwargs):
 
 def last_n_measurements(n):
     conn = engine.connect()
-    select_list = [getattr(measurements.c, value) for value in Config.MONITORED_VALUES]
+    select_list = [getattr(measurements.c, value) for value in config['MONITORED_VALUES']]
     query = select(select_list).order_by(measurements.c.id.desc()).limit(n)
     result = conn.execute(query)
     return result.fetchall()

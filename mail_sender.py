@@ -1,15 +1,8 @@
 import smtplib
 import ssl
 from microclimate_validator import InvalidationType
-from config import Config
+from config import config
 from logger import logger
-
-port = 465  # for SSL
-smtp_server = 'smtp.gmail.com'
-sender = {
-    'mail': Config.gmail_user,
-    'password': Config.gmail_pass,
-}
 
 
 class MailSender():
@@ -21,7 +14,7 @@ class MailSender():
     def send_email(self, invalid_measurements):
         try:
             context = ssl.create_default_context()
-            with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+            with smtplib.SMTP_SSL(config['smtp_server'], config['ssl_port'], context=context) as server:
                 server.login(self._sender['mail'], self._sender['password'])
                 server.sendmail(self._sender['mail'],
                                 self._receiver_mail,
