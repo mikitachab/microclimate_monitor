@@ -1,12 +1,13 @@
 import pytest
 
 from microclimate_validator import InvalidationType
-from mail_sender import MailSender, sender, receiver_email
+from mail_sender import MailSender
+from config import config
 
 
 @pytest.fixture
 def mail_sender():
-    return MailSender(sender, receiver_email, ('temperature', 'humidity'))
+    return MailSender(config['sender'], config['receiver_email'], ('temperature', 'humidity'))
 
 
 @pytest.mark.parametrize('measuremements, message', [

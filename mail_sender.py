@@ -1,16 +1,8 @@
-import os
 import smtplib
 import ssl
 from microclimate_validator import InvalidationType
+from config import config
 from logger import logger
-
-port = 465  # for SSL
-smtp_server = 'smtp.gmail.com'
-sender = {
-    'mail': 'microclimatepi@gmail.com',
-    'password': os.environ.get('GMAIL_PASS')
-}
-receiver_email = 'zpiseminar@gmail.com'  # receiver address
 
 
 class MailSender():
@@ -22,12 +14,14 @@ class MailSender():
     def send_email(self, invalid_measurements):
         try:
             context = ssl.create_default_context()
-            with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-                server.login(self._sender.mail, self._sender.password)
-                server.sendmail(self._sender.mail, self._receiver_mail, self._construct_message(invalid_measurements))
+            with smtplib.SMTP_SSL(config['smtp_server'], config['ssl_port'], context=context) as server:
+                server.login(self._sender['mail'], self._sender['password'])
+                server.sendmail(self._sender['mail'],
+                                self._receiver_mail,
+                                self._construct_message(invalid_measurements))
                 logger.info(f'sended email to {self._receiver_mail}')
         except Exception:
-            logger.error('connection troubles')
+            logger.exception('connection troubles')
 
     def _construct_message(self, invalid_measurements):
         message = ''

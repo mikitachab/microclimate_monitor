@@ -1,57 +1,38 @@
-import time
-from datetime import datetime
-from temp_humid import get_temperature_and_humidity
+from sensors import get_measurement
 from microclimate_validator import validate_climate
-from db import engine, measurements
+from db import measurements_insert, mean_of_last_n_measurements
 from logger import logger, initialize_logger
-from mail_sender import MailSender, sender, receiver_email
-from statistics import mean
-
-message = """\
-Subject: microclimate
-
-Hi, something wrong with your microclimate. It's time to something
-This message is sent from Python.
-Rasberry Pi started monitoring.
-"""
-
-MONITORED_VALUES = ('temperature', 'humidity')
-mail_sender = MailSender(sender, receiver_email, MONITORED_VALUES)
-
-initialize_logger('pimicroclimate.log')
-
-temperatures = []
-humidity_list = []
+from mail_sender import MailSender
+from timing import MonitorTimer
+from config import config
 
 
-while True:
+def main():
+    initialize_logger('pimicroclimate.log')
 
-    temperature, humidity = get_temperature_and_humidity()
+    mail_sender = MailSender(config['sender'], config['receiver_email'], config['MONITORED_VALUES'])
+    monitor_timer = MonitorTimer()
+    counter = 1
+    for _ in monitor_timer.run_forever():
+        measurement = get_measurement()
+        temperature, humidity = measurement['temperature'], measurement['humidity']
+        is_valid = not bool(validate_climate(temperature, humidity))
+        measurement['is_valid'] = is_valid
+        measurements_insert(**measurement)
 
-    temperatures.append(temperature)
-    humidity_list.append(humidity)
+        logger.info(f'T:{temperature} C H:{humidity}% VALID:{is_valid}')
 
-    is_valid = not bool(validate_climate(temperature, humidity))
-    measurement = {
-        'temperature': temperature,
-        'humidity': humidity,
-        'is_valid': is_valid,
-        'datetime': datetime.now().replace(microsecond=0)
-    }
-    conn = engine.connect()
-    ins = measurements.insert().values(**measurement)
-    conn.execute(ins)
-    logger.info(f'T:{temperature} C H:{humidity}% VALID:{is_valid}')
+        if counter >= config['min_measurements_count']:
+            counter = 1
+            avg_temp, avg_hum = mean_of_last_n_measurements(config['min_measurements_count'])
+            logger.info(f'AVG_TEMP: {avg_temp}, AVG_HUM {avg_hum}')
+            invalid_measurements = validate_climate(avg_temp, avg_hum)
 
-    if len(temperatures) == 5:
-        avg_temp = mean(temperatures)
-        avg_hum = mean(humidity_list)
-        invalid_measurements = validate_climate(avg_temp, avg_hum)
+            if invalid_measurements:
+                mail_sender.send_email(invalid_measurements)
+        else:
+            counter += 1
 
-        if invalid_measurements:
-            mail_sender.send_email(invalid_measurements)
 
-        temperatures.clear()
-        humidity_list.clear()
-
-    time.sleep(60)
+if __name__ == '__main__':
+    main()
