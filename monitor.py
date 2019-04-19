@@ -29,7 +29,7 @@ def main():
             invalid_measurements = validate_climate(avg_temp, avg_hum)
 
             if invalid_measurements:
-                mail_sender.send_email(invalid_measurements)
+                mail_sender.send_alarming_email(invalid_measurements)
         else:
             counter += 1
 
