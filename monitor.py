@@ -24,7 +24,7 @@ def main():
 
         if counter >= config['min_measurements_count']:
             counter = 1
-            avg_temp, avg_hum = mean_of_last_n_measurements(config['min_measurements_count'])
+            avg_temp, avg_hum, *_ = mean_of_last_n_measurements(config['min_measurements_count'])
             logger.info(f'AVG_TEMP: {avg_temp}, AVG_HUM {avg_hum}')
             invalid_measurements = validate_climate(avg_temp, avg_hum)
 
