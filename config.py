@@ -10,5 +10,7 @@ config = {
     'sender': {
         'mail': 'microclimatepi@gmail.com',
         'password': os.environ.get('GMAIL_PASS'),
-    }
+    },
+    'notification_time': '10:30',
+    'remind_time': 30
 }

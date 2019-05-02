@@ -108,3 +108,5 @@ venv.bak/
 pimicroclimate.log
 data.db
 test_db.py
+
+.vscode/
