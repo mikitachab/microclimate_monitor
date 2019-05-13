@@ -1,31 +1,13 @@
 #!/usr/bin/python
-#---------------------------------------------------------------------
-#    ___  ___  _ ____
-#   / _ \/ _ \(_) __/__  __ __
-#  / , _/ ___/ /\ \/ _ \/ // /
-# /_/|_/_/  /_/___/ .__/\_, /
-#                /_/   /___/
-#
-#           bh1750.py
-# Read data from a BH1750 digital light sensor.
-#
-# Author : Matt Hawkins
-# Date   : 26/06/2018
-#
-# For more information please visit :
-# https://www.raspberrypi-spy.co.uk/?s=bh1750
-#
-#---------------------------------------------------------------------
 import smbus
-import time
 
 # Define some constants from the datasheet
 
-DEVICE     = 0x23 # Default device I2C address
+DEVICE = 0x23  # Default device I2C address
 
-POWER_DOWN = 0x00 # No active state
-POWER_ON   = 0x01 # Power on
-RESET      = 0x07 # Reset data register value
+POWER_DOWN = 0x00  # No active state
+POWER_ON = 0x01  # Power on
+RESET = 0x07  # Reset data register value
 
 # Start measurement at 4lx resolution. Time typically 16ms.
 CONTINUOUS_LOW_RES_MODE = 0x13
@@ -45,23 +27,23 @@ ONE_TIME_LOW_RES_MODE = 0x23
 
 bus = smbus.SMBus(1)  # Rev 2 Pi uses 1
 
+
 def convert_to_number(data):
-  # Simple function to convert 2 bytes of data
-  # into a decimal number. Optional parameter 'decimals'
-  # will round to specified number of decimal places.
-  result=(data[1] + (256 * data[0])) / 1.2
-  return (result)
+    # Simple function to convert 2 bytes of data
+    # into a decimal number. Optional parameter 'decimals'
+    # will round to specified number of decimal places.
+    result = (data[1] + (256 * data[0])) / 1.2
+    return (result)
+
 
 def read_light(addr=DEVICE):
-  # Read data from I2C interface
-  data = bus.read_i2c_block_data(addr,ONE_TIME_HIGH_RES_MODE_1)
-  return convert_to_number(data)
+    # Read data from I2C interface
+    data = bus.read_i2c_block_data(addr, ONE_TIME_HIGH_RES_MODE_1)
+    return convert_to_number(data)
+
 
 def get_light():
     while True:
         light = read_light()
         if light:
             return int(light)
-
-
-
