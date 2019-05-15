@@ -23,11 +23,11 @@ def main():
         logger.info(f'T:{temperature} C H:{humidity}% VALID:{is_valid}')
 
         if not is_valid:
-            MonitorTimer.run_more_frequently = True
+            monitor_timer.run_more_frequently = True
 
         if counter >= config['min_measurements_count']:
             counter = 1
-            MonitorTimer.run_more_frequently = False
+            monitor_timer.run_more_frequently = False
 
             avg_temp, avg_hum = mean_of_last_n_measurements(config['min_measurements_count'])
             logger.info(f'AVG_TEMP: {avg_temp}, AVG_HUM {avg_hum}')
