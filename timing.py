@@ -1,4 +1,5 @@
 import time
+from datetime import datetime
 from config import config
 
 
@@ -22,3 +23,8 @@ class MonitorTimer:
     def reset_timer(self):
         self.sleep_time = config['default_sleep_time']
         self.reduced_sleep_time = self.sleep_time / config['measurements_frequency_multiplier']
+
+    @staticmethod
+    def get_current_time():
+        now = datetime.now()
+        return ':'.join((str(now.hour), str(now.minute)))

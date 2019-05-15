@@ -12,6 +12,8 @@ measurements = Table(
     Column('datetime', DateTime),
     Column('temperature', Integer),
     Column('humidity', Integer),
+    Column('light', Integer),
+    Column('is_loud', Boolean),
     Column('is_valid', Boolean)
 )
 
