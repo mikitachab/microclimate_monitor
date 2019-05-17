@@ -30,8 +30,8 @@ def main():
 
         if counter == config['min_measurements_count']:
             counter = 1
-           	monitor_timer.run_more_frequently = False
-           	
+            monitor_timer.run_more_frequently = False
+
             avg_temp, avg_hum = mean_of_last_n_measurements(
                 config['min_measurements_count'])
 
