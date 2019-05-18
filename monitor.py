@@ -5,11 +5,13 @@ from logger import logger, initialize_logger
 from mail_sender import MailSender
 from timing import MonitorTimer
 from config import config
+from api_client import ApiClient
 
 
 def main():
     initialize_logger('pimicroclimate.log')
 
+    api_client = ApiClient()
     mail_sender = MailSender(
         config['sender'], config['receiver_email'], config['MONITORED_VALUES'])
     monitor_timer = MonitorTimer()
@@ -22,6 +24,7 @@ def main():
         is_valid = not bool(validate_climate(temperature, humidity))
         measurement['is_valid'] = is_valid
         measurements_insert(**measurement)
+        api_client.post_measurement(measurement)
 
         logger.info(f'T:{temperature} C H:{humidity}% VALID:{is_valid}')
 
