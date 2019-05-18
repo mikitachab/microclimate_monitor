@@ -2,6 +2,7 @@ import os
 
 config = {
     'default_sleep_time': 2,
+    'measurements_frequency_multiplier': 5,
     'min_measurements_count': 5,
     'receiver_email': 'zpiseminar@gmail.com',
     'MONITORED_VALUES': ('temperature', 'humidity', 'light', 'is_loud'),
