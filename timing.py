@@ -6,6 +6,7 @@ from config import config
 class MonitorTimer:
     def __init__(self):
         self.sleep_time = config['default_sleep_time']
+        self.reset_timer()
         self._main_counter = 0
         self._reminder_counter = 0
 
