@@ -35,7 +35,7 @@ def main():
             counter = 1
             monitor_timer.run_more_frequently = False
 
-            avg_temp, avg_hum = mean_of_last_n_measurements(
+            avg_temp, avg_hum, *_ = mean_of_last_n_measurements(
                 config['min_measurements_count'])
 
             logger.info(f'AVG_TEMP: {avg_temp}, AVG_HUM {avg_hum}')
