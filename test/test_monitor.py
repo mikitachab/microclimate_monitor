@@ -48,14 +48,14 @@ def test_average_measurements_invalid(monitor):
     set_all_measurements_invalid()
     for _ in range(config['min_measurements_count']):
         monitor._tick()
-    assert len(monitor._validate_last_measurements()) is 2
+    assert len(monitor._validate_last_measurements()) == 2
 
 
 def test_average_measurements_valid(monitor):
     set_all_measurements_valid()
     for _ in range(config['min_measurements_count']):
         monitor._tick()
-    assert len(monitor._validate_last_measurements()) is 0
+    assert len(monitor._validate_last_measurements()) == 0
 
 
 # TODO: Add mock for function calls inside monitor.py, test whether messages are sent
