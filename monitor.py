@@ -13,6 +13,7 @@ class Monitor():
         self._mail_sender = MailSender(
             config['sender'], config['receiver_email'], config['MONITORED_VALUES'])
         self._timer = MonitorTimer()
+        self.test_dedicated_state = False
 
     def run(self):
         for _ in self._timer.run_forever():
@@ -22,22 +23,22 @@ class Monitor():
         is_valid = self._receive_and_check_measurements()
 
         if not is_valid:
-            self._timer.run_more_frequently = True
+            self._timer.increase_measurement_rate = True
 
         if self._timer.tick_main_counter() == config['min_measurements_count']:
             invalid_measurements = self._validate_last_measurements()
             if invalid_measurements and self._last_invalid_measurements != invalid_measurements:
                 self._mail_sender.send_alarming_email(invalid_measurements)
-                last_invalid_measurements = invalid_measurements
+                self._last_invalid_measurements = invalid_measurements
                 self._timer.reset_reminder_counter()
-            elif last_invalid_measurements:
+            elif self._last_invalid_measurements:
                 self._mail_sender.send_praising_email()
-                last_invalid_measurements.clear()
+                self._last_invalid_measurements.clear()
                 self._timer.reset_reminder_counter()
 
-        if last_invalid_measurements and self._timer.tick_reminder_counter() == config['remind_time']:
+        if self._last_invalid_measurements and self._timer.tick_reminder_counter() == config['remind_time']:
             self._mail_sender.send_reminding_email(
-                last_invalid_measurements)
+                self._last_invalid_measurements)
             self._timer.reset_reminder_counter()
 
         current_hour = MonitorTimer.get_current_time()
@@ -56,8 +57,8 @@ class Monitor():
 
     def _validate_last_measurements(self):
         self._timer.reset_main_counter()
-        self._timer.run_more_frequently = False
-        avg_temp, avg_hum = mean_of_last_n_measurements(
+        self._timer.increase_measurement_rate = False
+        avg_temp, avg_hum, avg_light, avg_sound = mean_of_last_n_measurements(  # TODO: Add light and sound check
             config['min_measurements_count'])
 
         logger.info(f'AVG_TEMP: {avg_temp}, AVG_HUM {avg_hum}')

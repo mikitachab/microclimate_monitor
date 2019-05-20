@@ -13,5 +13,6 @@ config = {
         'password': os.environ.get('GMAIL_PASS'),
     },
     'notification_time': '10:30',
-    'remind_time': 30
+    'remind_time': 30,
+    'test_dedicated_state': False
 }

@@ -9,6 +9,8 @@ class MonitorTimer:
         self.reset_timer()
         self._main_counter = 0
         self._reminder_counter = 0
+        self.reduced_sleep_time = self.sleep_time / config['measurements_frequency_multiplier']
+        self.increase_measurement_rate = False
 
     def run_forever(self):
         while True:

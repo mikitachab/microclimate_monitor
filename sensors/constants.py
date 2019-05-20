@@ -7,3 +7,10 @@ FAKE_DHT11_READ = {
     'temperature': 0,
     'humidity': 10
 }
+
+FAKE_SENSORS = {
+    'temperature': 20,
+    'humidity': 50,
+    'light': 0,
+    'is_loud': False
+}
