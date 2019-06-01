@@ -14,5 +14,6 @@ config = {
     },
     'notification_time': '10:30',
     'remind_time': 30,
-    'test_dedicated_state': False
+    'test_dedicated_state': False,
+    'device_id': 1,
 }

@@ -52,6 +52,7 @@ class Monitor():
         temperature, humidity = measurement['temperature'], measurement['humidity']
         is_valid = not bool(validate_climate(temperature, humidity))
         measurement['is_valid'] = is_valid
+        measurement['device_id'] = config['device_id']
         measurements_insert(**measurement)
         self._api_client.post_measurement(measurement)
         logger.info(f'T:{temperature} C H:{humidity}% VALID:{is_valid}')
