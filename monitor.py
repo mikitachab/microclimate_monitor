@@ -3,6 +3,7 @@ from microclimate_validator import validate_climate
 from db import measurements_insert, mean_of_last_n_measurements
 from logger import logger, initialize_logger
 from mail_sender import MailSender
+from api_client import ApiClient
 from timing import MonitorTimer
 from config import config
 
@@ -13,6 +14,7 @@ class Monitor():
         self._mail_sender = MailSender(
             config['sender'], config['receiver_email'], config['MONITORED_VALUES'])
         self._timer = MonitorTimer()
+        self._api_client = ApiClient()
         self.test_dedicated_state = False
 
     def run(self):
@@ -51,7 +53,7 @@ class Monitor():
         is_valid = not bool(validate_climate(temperature, humidity))
         measurement['is_valid'] = is_valid
         measurements_insert(**measurement)
-
+        self._api_client.post_measurement(measurement)
         logger.info(f'T:{temperature} C H:{humidity}% VALID:{is_valid}')
         return is_valid
 
