@@ -14,7 +14,8 @@ measurements = Table(
     Column('humidity', Integer),
     Column('light', Integer),
     Column('is_loud', Boolean),
-    Column('is_valid', Boolean)
+    Column('is_valid', Boolean),
+    Column('device_id', Integer),
 )
 
 meta.create_all(engine)
