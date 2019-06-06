@@ -2,6 +2,5 @@
     "receiver_email": "zpiseminar@gmail.com",
     "min_measurements_count": 5,
     "default_sleep_time": 2,
-    "notification_time": "10:30",
-    "remind_time": 30,
+    "notification_time": "10:30"
 }

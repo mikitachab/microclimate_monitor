@@ -1,6 +1,6 @@
 import time
 from datetime import datetime
-from config import config
+from config import Config as config
 
 
 class MonitorTimer:
