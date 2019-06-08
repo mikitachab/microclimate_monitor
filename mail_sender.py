@@ -25,7 +25,7 @@ class MailSender():
         self._send_email(self._mail_builder.build_mail(MailType.INFO, measurements))
 
     def get_recivers(self):
-        return config['receivers_emails']
+        return config['recivers_emails']
 
     def _send_email(self, email_message):
         try:
