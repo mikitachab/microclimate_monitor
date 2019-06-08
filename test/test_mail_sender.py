@@ -38,18 +38,18 @@ measurements_and_expected_messages = [
 @pytest.mark.parametrize('measurements, message', measurements_and_expected_messages)
 def test_build_alarming_mail(mail_builder, measurements, message):
     assert mail_builder.build_mail(MailType.ALARM, measurements) == \
-            'A problem occured with your climate!\n' + message
+        'A problem occured with your climate!\n' + message
 
 
 @pytest.mark.parametrize('measurements, message', measurements_and_expected_messages)
 def test_build_reminding_mail(mail_builder, measurements, message):
     assert mail_builder.build_mail(MailType.REMIND, measurements) == \
-            'Last problems are still not fixed! Reminder: \n' + message
+        'Last problems are still not fixed! Reminder: \n' + message
 
 
 def test_build_praising_mail(mail_builder):
     assert mail_builder.build_mail(MailType.PRAISE) == \
-            'Everything is good with your climate now!\n'
+        'Everything is good with your climate now!\n'
 
 
 def test_build_informing_mail(mail_builder):

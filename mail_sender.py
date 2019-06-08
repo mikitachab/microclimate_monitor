@@ -6,6 +6,11 @@ from config import Config
 
 config = Config('config.json')
 
+mtemplate = """\
+Subject: Micricliate Monitor
+
+"""
+
 
 class MailSender():
     def __init__(self, sender, measured_values):
@@ -36,7 +41,7 @@ class MailSender():
                     server.login(self._sender['mail'], self._sender['password'])
                     server.sendmail(self._sender['mail'],
                                     reciver,
-                                    email_message)
+                                    mtemplate + email_message)
                     logger.info(f'sended email to {reciver}')
         except Exception:
             logger.exception('connection troubles')
