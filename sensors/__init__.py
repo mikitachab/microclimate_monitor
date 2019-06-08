@@ -1,9 +1,10 @@
-from config import config
+from config import default_static_config as config
 from datetime import datetime
 from sensors.constants import FAKE_SENSORS
 from sensors.temp_humid import get_temperature, get_humidity
 from sensors.light import get_light
 from sensors.sound import get_sound
+
 
 sensors_map = {
     'temperature': get_temperature,

@@ -5,14 +5,16 @@ from logger import logger, initialize_logger
 from mail_sender import MailSender
 from api_client import ApiClient
 from timing import MonitorTimer
-from config import config
+from config import Config
+
+config = Config('config.json')
 
 
 class Monitor():
     def __init__(self):
         self._last_invalid_measurements = {}
         self._mail_sender = MailSender(
-            config['sender'], config['receiver_email'], config['MONITORED_VALUES'])
+            config['sender'], config['MONITORED_VALUES'])
         self._timer = MonitorTimer()
         self._api_client = ApiClient()
         self.test_dedicated_state = False

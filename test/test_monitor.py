@@ -1,7 +1,9 @@
 import pytest
-from config import config
 from monitor import Monitor
 from sensors import constants
+from config import Config
+
+config = Config('config.json')
 
 
 @pytest.fixture

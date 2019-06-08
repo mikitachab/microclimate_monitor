@@ -1,7 +1,7 @@
 from statistics import mean
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, DateTime, Boolean
 from sqlalchemy.sql import select
-from config import Config as config
+from config import default_static_config as config
 meta = MetaData()
 engine = create_engine('sqlite:///data.db')
 
